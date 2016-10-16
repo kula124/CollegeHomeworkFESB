@@ -116,7 +116,7 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 			i -=1;
 			continue;
 		}
-		//	fscanf(fp,"  %s  %s  %f  ",&nameb,&lnameb, &temp->points);
+		//	fscanf(fp,"  %s  %s  %f  ",&nameb,&lnameb, &temp->points); --> For noobs ^ ^
 		stdp temp = (stdp)malloc(sizeof(student));
 		if (!temp)
 			return NULL;
@@ -132,7 +132,7 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 			*cmax = temp->points;
 		sarray[i] = temp;
 	}
-	ReleseData(data, 3); //--> Bad heap access error? o_O   O_O   O_o
+	ReleseData(data, 3); //--> Bad heap access error? [SOLVED]
 	return sarray;
 }
 char** GetSubstrings(char* string, char termChar)  //Magics, do not touch
@@ -185,7 +185,7 @@ void ReadData(stdp* studenti_, int c, float max)
 
 //-----------------------------------------------------------------//
 //-----------------------------------------------------------------//
-
+                      //CLEANER METHODS
 //-----------------------------------------------------------------//
 //-----------------------------------------------------------------//
 
@@ -202,5 +202,6 @@ void ReleseData(char** data, int count)
 {
 	for (int i=0;i<count;i++)
 		free(data[i]);
+	//free(data) -> Error, data = data[0]?
 }
 #endif
