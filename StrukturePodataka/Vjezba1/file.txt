@@ -1,0 +1,9 @@
+#Ovo je komentar
+#Komentar pocinje sa #. Takodjer program ignorira linije krace od 10 znakova
+#(iniciali + bodovi(bodovi imaju 6 znakova) + 2 razmaka)
+ovo npr
+Ivan Kulis 50.000
+#Blank line isto
+Sanja Galic 60.123
+Matko Jandrokovic 13.454
+Antea Deic 29.173

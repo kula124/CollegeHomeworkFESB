@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba2", "Vjezba2\Vjezba2.vcxproj", "{2BF5B3DD-1B7E-4921-A6A2-2BB84D62BB46}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba1", "Vjezba1\Vjezba1.vcxproj", "{9DA6746C-10CD-48D8-813C-FC64022E388E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BF5B3DD-1B7E-4921-A6A2-2BB84D62BB46}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2BF5B3DD-1B7E-4921-A6A2-2BB84D62BB46}.Debug|Win32.Build.0 = Debug|Win32
+		{2BF5B3DD-1B7E-4921-A6A2-2BB84D62BB46}.Release|Win32.ActiveCfg = Release|Win32
+		{2BF5B3DD-1B7E-4921-A6A2-2BB84D62BB46}.Release|Win32.Build.0 = Release|Win32
+		{9DA6746C-10CD-48D8-813C-FC64022E388E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DA6746C-10CD-48D8-813C-FC64022E388E}.Debug|Win32.Build.0 = Debug|Win32
+		{9DA6746C-10CD-48D8-813C-FC64022E388E}.Release|Win32.ActiveCfg = Release|Win32
+		{9DA6746C-10CD-48D8-813C-FC64022E388E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
