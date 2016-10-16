@@ -63,7 +63,7 @@ int main()
 			puts("[OK]");
 			fclose(file_);
 			file_=NULL;
-			puts("\nFile closed\n");
+			puts("File closed\n");
 			fread = 1;
 			fpath = 0;
 			break;
