@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#pragma warning(disable:4996)
+#pragma warning(disable:4996) 
 #endif
 
 #ifndef HELPER_CPP
@@ -135,7 +135,7 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 	ReleseData(data, 3); //--> Bad heap access error? [SOLVED]
 	return sarray;
 }
-char** GetSubstrings(char* string, char termChar)  //Magics, do not touch
+char** GetSubstrings(char* string, char termChar)  // 
 {
 	int lengt = strlen(string);
 	int i, previ =0, count=0;
@@ -175,7 +175,7 @@ void ReadData(stdp* studenti_, int c, float max)
 		printf("%s\t",studenti_[i]->name);
 		printf("%s\t",studenti_[i]->lname);
 		if (strlen(studenti_[i]->lname) < preL+4)
-			printf("\t");
+			printf("\t"); //formatiranje, da ne preskace iz stupca ako je prezime dugacko, bio sam ljen da dodam to i za ime
 		printf("%6.3f\t",studenti_[i]->points);
 		printf("%6.3lf\t",((((double)studenti_[i]->points/(max)))*100));
 		puts("\t");
@@ -201,7 +201,10 @@ void ReleseMemoryStd(stdp* arr, int count)
 void ReleseData(char** data, int count)
 {
 	for (int i=0;i<count;i++)
-		free(data[i]);
+		free(data[i]); //Ne dodavanje +1 u size u malloc-u je rusilo free kod poziva na char*. Znaci da '\0' se ne broji u strlen... Nisam to znao
 	//free(data) -> Error, data = data[0]?
 }
+//mozda se mogu spojiti ove dvije funkcije u jednu oblika:
+//void ReleseMemory(void**p, int count, int isStdudent);
+//pokusao ali odustao... heap overwrite errors n stuff
 #endif
