@@ -116,7 +116,7 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 			i -=1;
 			continue;
 		}
-		//	fscanf(fp,"  %s  %s  %f  ",&nameb,&lnameb, &temp->points); --> For noobs ^ ^
+		//	fscanf(fp,"  %s  %s  %f  ",&nameb,&lnameb, &temp->points); --> too izi
 		stdp temp = (stdp)malloc(sizeof(student));
 		if (!temp)
 			return NULL;
