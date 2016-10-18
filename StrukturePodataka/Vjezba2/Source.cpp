@@ -1,4 +1,3 @@
-
 #include "Helper.h"
 
 int main()
