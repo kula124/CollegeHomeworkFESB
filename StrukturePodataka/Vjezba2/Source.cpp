@@ -164,7 +164,7 @@ int main()
 			printf("Unesite filepath: ");
 			scanf(" %s", &path);
 			printf("Dodati podatke na postojecu listu? [d/n]: ");
-			scanf("%c", &c);
+			scanf(" %c", &c);
 			if (c == 'd' || c == 'D')
 				append = 1;
 			else if (c == 'n' || c == 'n')

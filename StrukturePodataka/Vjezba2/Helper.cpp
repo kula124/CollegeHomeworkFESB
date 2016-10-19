@@ -208,37 +208,39 @@ int ReadFile(optr root, char * path, int append)
 	FILE* file_ = fopen(path, "r");
 	if (!file_)
 		return ERROR_OPENING_FILE;
-	optr p = root->next;
+	optr p = root;
 	if (append)
 	{
 		while (p->next)
 			p = p->next;
-		int g;
+		int g = 0;
 		char name[NAME_LENGHT], lname[NAME_LENGHT];
-		while (fscanf(file_, " %s %s %d", &name, &lname, g)) //ToDo: Move to fgets to support comments n stuff
+		while (!feof(file_)) //ToDo: Move to fgets to support comments n stuff
 		{
+			fscanf(file_, " %s %s %d", &name, &lname, &g);
 			optr n = CreateElement(name, lname, g);
 			n->next = p->next;
 			p->next = n;
 		}
-		if (!feof(file_))
-			return ERROR_READING_FILE;
-		return OK;
+		/*if (!feof(file_))
+			return ERROR_READING_FILE;*/
+		return OK; //God Bless fgets().... fscanf sux
 	}//--
 		int error = 0;
 		error = ClearList(root);
-		if (error < 0)
+		if (error != ERROR_EMPTY_LIST && error != 0)
 			return error;
-		int g;
+		int g = 0;
 		char name[NAME_LENGHT], lname[NAME_LENGHT];
-		while (fscanf(file_, " %s %s %d", &name, &lname, g))
+		while (!feof(file_))
 		{
-			p = CreateElement(name, lname, g);
-			p->next = NULL;
+			fscanf(file_, " %s %s %d", &name, &lname, &g);
+			p->next = CreateElement(name, lname, g);
+			p->next->next = NULL;
 			p = p->next;
 		}
-		if (!feof(file_))
-			return ERROR_READING_FILE;
+		/*if (!feof(file_))
+		return ERROR_READING_FILE;*/
 		return OK;
 }
 //---------------------------------------------
