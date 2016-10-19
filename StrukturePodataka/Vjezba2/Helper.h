@@ -36,6 +36,8 @@ int ShowElement(optr element);
 int Delete(optr root, optr elemnt);
 int FindElements(optr root,optr** found ,char* lastName, int * FindAll);
 char* Catch(int ErrorCode, int* shouldExit);
-//int WriteToFIle(optr root, char* filepath, int append, optr* AdditionalPersons);
-//int ReadFile(optr root, char* path, optr seperateList);
+int WriteToFIle(optr root, char* filepath);
+int ReadFile(optr root, char* path, int append);
+int ClearList(optr root);
+int FreeE(optr el);
 #endif

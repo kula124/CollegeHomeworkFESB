@@ -58,7 +58,7 @@ int ShowList(optr root)
 	printf("Indx\tIme\tPrezime\t\tGod\n");
 	while (p)
 	{
-		printf("[%d] %s\t%s\t\t%d", i++, p->name, p->lname, p->born);
+		printf("[%d] %s\t%s\t\t%d\n", i++, p->name, p->lname, p->born);
 		p = p->next;
 	}
 	if (i == 1)
@@ -82,14 +82,14 @@ int Delete(optr root, optr element)
 		return ERROR_UNESPECTED_NULL_PARAMETER;
 	if (!root->next)
 		return ERROR_EMPTY_LIST;
-	optr p = root->next;
+	optr p = root;
 	while (p->next != element && p->next != NULL)
 		p = p->next;
 	if (p->next == NULL)
 		return ERROR_ELEMENT_NOT_FOUND;
 	optr del = p->next;
 	p->next = p->next->next;
-	free(del);
+	FreeE(del);
 	return OK;
 }
 //---------------------------------------------
@@ -98,25 +98,29 @@ int FindElements(optr root, optr** found, char* lastName, int* FindAll)
 {
 	int count = 1;
 	optr p = root->next;
-	*found = NULL;
+	optr* temp = NULL;
 	if (*FindAll > 0)
 	{
 		while (p)
 		{
 			if (strcmp(p->lname,lastName) == 0)
 			{
-				*found = (optr*)realloc(*found, sizeof(_osoba) * count);
-				if (*found == NULL)
-					return ERROR_ALLOCATING_MEMORY;
-				*found[count - 1] = (optr)malloc(sizeof(optr));
-				*found[count - 1] = p;
+				temp = (optr*)realloc(temp,sizeof(optr) * count);
+				//*found = (optr*)realloc(*found,sizeof(_osoba) * count);
+				//if (*found == NULL)
+					//return ERROR_ALLOCATING_MEMORY;
+				//*found[count] = (optr)malloc(sizeof(optr));
+				//*found[count] = p;
+				//count++;
+				temp[count-1] = p;
 				count++;
-				p = p->next;
 			}
+			p = p->next;
 		}
 		if (count == 0)
 			return ERROR_ELEMENT_NOT_FOUND;
-		*FindAll = count;
+		*found = temp;
+		*FindAll = count-1;
 		return OK;
 	}
 	else
@@ -138,6 +142,7 @@ int FindElements(optr root, optr** found, char* lastName, int* FindAll)
 	}
 }
 //---------------------------------------------
+
 char * Catch(int ErrorCode, int* ShuldExit)
 {
 	*ShuldExit = 0;
@@ -172,4 +177,98 @@ char * Catch(int ErrorCode, int* ShuldExit)
 	default:
 		break;
 	}
+}
+//---------------------------------------------
+
+int WriteToFIle(optr root, char * filepath)
+{
+	FILE* file_ = fopen(filepath, "w");
+	if (!file_)
+		return ERROR_OPENING_FILE;
+	if (!root || !root->next)
+		return ERROR_EMPTY_LIST;
+	//fprintf(file_,"#Ime\tPrezime\t\tGod\n"); -->To Do: Add comment support
+	optr p = root->next;
+	while (p)
+	{
+		fprintf(file_, "%s\t%s\t\t%d\n", p->name, p->lname, p->born);
+		p = p->next;
+	}
+	if (p)
+		return ERROR_WRITTING_TO_FILE;
+	fclose(file_);
+	return OK;
+}
+//---------------------------------------------
+
+int ReadFile(optr root, char * path, int append)
+{
+	if (!root)
+		return ERROR_NULL_ROOT;
+	FILE* file_ = fopen(path, "r");
+	if (!file_)
+		return ERROR_OPENING_FILE;
+	optr p = root->next;
+	if (append)
+	{
+		while (p->next)
+			p = p->next;
+		int g;
+		char name[NAME_LENGHT], lname[NAME_LENGHT];
+		while (fscanf(file_, " %s %s %d", &name, &lname, g)) //ToDo: Move to fgets to support comments n stuff
+		{
+			optr n = CreateElement(name, lname, g);
+			n->next = p->next;
+			p->next = n;
+		}
+		if (!feof(file_))
+			return ERROR_READING_FILE;
+		return OK;
+	}//--
+		int error = 0;
+		error = ClearList(root);
+		if (error < 0)
+			return error;
+		int g;
+		char name[NAME_LENGHT], lname[NAME_LENGHT];
+		while (fscanf(file_, " %s %s %d", &name, &lname, g))
+		{
+			p = CreateElement(name, lname, g);
+			p->next = NULL;
+			p = p->next;
+		}
+		if (!feof(file_))
+			return ERROR_READING_FILE;
+		return OK;
+}
+//---------------------------------------------
+
+int ClearList(optr root)
+{
+	if (!root)
+		return ERROR_NULL_ROOT;
+	if (!root->next)
+		return ERROR_EMPTY_LIST;
+	optr p = root->next;
+	optr q = p;
+	while (p->next)
+	{
+		q = p;
+		p = p->next;
+		FreeE(q);
+	}
+	FreeE(p);
+	root->next = NULL;
+	return OK;
+}
+//--------------------------------------------
+
+int FreeE(optr el)
+{
+	if (!el)
+		return ERROR_UNESPECTED_NULL_PARAMETER;
+	free(el->lname);
+	free(el->name);
+	free(el);
+	return OK;
 }
