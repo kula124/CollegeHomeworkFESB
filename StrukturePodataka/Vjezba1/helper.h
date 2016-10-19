@@ -101,7 +101,7 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 {
 	rewind(fp);
 	stdp *sarray = NULL;
-	sarray = (stdp*) malloc (sizeof(student)*count);
+	sarray = (stdp*) malloc (sizeof(stdp)*count);
 	if (!sarray)
 		return NULL;
 	int i = 0;

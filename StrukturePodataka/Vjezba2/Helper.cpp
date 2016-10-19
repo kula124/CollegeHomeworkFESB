@@ -105,7 +105,7 @@ int FindElements(optr root, optr** found, char* lastName, int* FindAll)
 		{
 			if (strcmp(p->lname,lastName) == 0)
 			{
-				*found = (optr*)realloc(*found, sizeof(optr*) * count);
+				*found = (optr*)realloc(*found, sizeof(_osoba) * count);
 				if (*found == NULL)
 					return ERROR_ALLOCATING_MEMORY;
 				*found[count - 1] = (optr)malloc(sizeof(optr));
