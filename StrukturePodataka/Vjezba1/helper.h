@@ -5,7 +5,9 @@
 #include <string.h>
 #pragma warning(disable:4996) 
 #endif
-
+///////////
+//TO DO/// ADD HELPER.CPP, separate .h from cpp <_<
+/////////
 #ifndef HELPER_CPP
 #define HELPER_CPP
 //
@@ -135,34 +137,47 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 	ReleseData(data, 3); //--> Bad heap access error? [SOLVED]
 	return sarray;
 }
-char** GetSubstrings(char* string, char termChar)  // 
+char** GetSubstrings(char* string, char termChar)  // Improved from Vjezba2
 {
 	int lengt = strlen(string);
-	int i, previ =0, count=0;
-	for (i=0;i<lengt;i++)
+	if (lengt < 10)
+		return NULL;
+	int i, previ = 0, count = 0;
+	for (i = 0; i<lengt; i++)
 	{
 		if (string[i] == termChar)
 		{
+			if (string[i - 1] == termChar)
+				continue;
 			count++;
+			previ = i;
 		}
 	}
-	char** substrings = (char**)malloc(sizeof(char*)*count + 1);
+	count++;
+	char** substrings = (char**)malloc(sizeof(char*)*count); //fixed +1 extra field allocation
 	if (!substrings)
 		return NULL;
-	for (i=0;i<lengt;i++)
+	int tempCount = 0;
+	previ = 0;
+	for (i = 0; i <= lengt; i++) //fixed skipping over block due to for exit
 	{
-		if (string[i] == termChar || string[i] == '\0' || string[i] == '\n' || i==lengt-1)
+		if (string[i] == termChar || string[i] == '\0' || string[i] == '\n' || i == lengt || tempCount == count)
 		{
-			char* sub = (char*)malloc(sizeof(char)*(i-previ) + 1);
+			char* sub = (char*)malloc(sizeof(char)*(i - previ) + 1);
 			if (!sub)
 				return NULL;
-			memcpy(sub,&string[previ],i-previ);
-			sub[i-previ] = '\0'; //memset mozda?
-			previ=i+1;
-			substrings[count--] = sub; //naopako ce ic: bod, prez, ime (2,1,0)
+			memcpy(sub, &string[previ], i - previ);
+			sub[i - previ] = '\0'; //memset mozda?
+			previ = i + 1;
+			if (strlen(sub) <= 1)
+			{
+				free(sub);
+				continue;
+			}
+			substrings[tempCount++] = sub;
 		}
 	}
-	return substrings; 
+	return substrings;
 }
 void ReadData(stdp* studenti_, int c, float max)
 {
