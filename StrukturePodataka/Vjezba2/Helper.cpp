@@ -19,6 +19,7 @@ optr CreateElement(char * n, char * l, int god)
 	strcpy(p->name, n);
 	strcpy(p->lname, l);
 	p->born = god;
+	p->next = NULL;
 	return p;
 }
 //--------------------------------------
@@ -187,7 +188,7 @@ int WriteToFIle(optr root, char * filepath)
 		return ERROR_OPENING_FILE;
 	if (!root || !root->next)
 		return ERROR_EMPTY_LIST;
-	//fprintf(file_,"#Ime\tPrezime\t\tGod\n"); -->To Do: Add comment support
+	fprintf(file_,"#Ime\tPrezime\t\tGod\n");// -->To Do: Add comment support <-- DONE
 	optr p = root->next;
 	while (p)
 	{
@@ -214,33 +215,45 @@ int ReadFile(optr root, char * path, int append)
 		while (p->next)
 			p = p->next;
 		int g = 0;
-		char name[NAME_LENGHT], lname[NAME_LENGHT];
-		while (!feof(file_)) //ToDo: Move to fgets to support comments n stuff
+		char buffer[2 * NAME_LENGHT + 6]; // 2x space + 4 digits and 2 names
+		while (fgets(buffer,2*NAME_LENGHT +6,file_)) //Hello fgets and GetSubstrings :)
 		{
-			fscanf(file_, " %s %s %d", &name, &lname, &g);
-			optr n = CreateElement(name, lname, g);
+			if (strlen(buffer) < 10 || buffer[0] == '#')
+				continue;
+			char** data = GetSubstrings(buffer, '\t');
+			if (!data)
+				continue;
+			optr n = CreateElement(data[0], data[1], atoi(data[2]));
+			if (!n)
+				return ERROR_ALLOCATING_MEMORY;
 			n->next = p->next;
 			p->next = n;
+			p = p->next;
 		}
-		/*if (!feof(file_))
-			return ERROR_READING_FILE;*/
-		return OK; //God Bless fgets().... fscanf sux
-	}//--
+		if (!feof(file_))
+			return ERROR_READING_FILE;
+		fclose(file_);
+		return OK; 
+	}//---<<< below, append = false
 		int error = 0;
 		error = ClearList(root);
 		if (error != ERROR_EMPTY_LIST && error != 0)
 			return error;
 		int g = 0;
-		char name[NAME_LENGHT], lname[NAME_LENGHT];
-		while (!feof(file_))
+		char buffer[2 * NAME_LENGHT + 6]; // 2x space + 4 digits and 2 names
+		while (fgets(buffer, 2 * NAME_LENGHT + 6, file_))
 		{
-			fscanf(file_, " %s %s %d", &name, &lname, &g);
-			p->next = CreateElement(name, lname, g);
-			p->next->next = NULL;
+			if (strlen(buffer) < 10 || buffer[0] == '#')
+				continue;
+			char** data = GetSubstrings(buffer, '\t');
+			if (!data)
+				continue;
+			p->next = CreateElement(data[0], data[1], atoi(data[2]));
 			p = p->next;
 		}
-		/*if (!feof(file_))
-		return ERROR_READING_FILE;*/
+		if (!feof(file_))
+			return ERROR_READING_FILE;
+		fclose(file_);
 		return OK;
 }
 //---------------------------------------------
@@ -273,4 +286,48 @@ int FreeE(optr el)
 	free(el->name);
 	free(el);
 	return OK;
+}
+//--------------------------------------------
+
+char** GetSubstrings(char* string, char termChar)  
+{
+	int lengt = strlen(string);
+	if (lengt < 10)
+		return NULL;
+	int i, previ = 0, count = 0;
+	for (i = 0; i<lengt; i++)
+	{
+		if (string[i] == termChar )
+		{
+			if (string[i - 1] == termChar)
+				continue;
+			count++;
+			previ = i;
+		}
+	}
+	count++;
+	char** substrings = (char**)malloc(sizeof(char*)*count);
+	if (!substrings)
+		return NULL;
+	int tempCount = 0;
+	previ = 0;
+	for (i = 0; i<=lengt; i++)
+	{
+		if (string[i] == termChar || string[i] == '\0' || string[i] == '\n' || i == lengt || tempCount == count)
+		{
+			char* sub = (char*)malloc(sizeof(char)*(i - previ) + 1);
+			if (!sub)
+				return NULL;
+			memcpy(sub, &string[previ], i - previ);
+			sub[i - previ] = '\0'; //memset mozda?
+			previ = i + 1;
+			if (strlen(sub) <= 1)
+			{
+				free(sub);
+				continue;
+			}
+			substrings[tempCount++] = sub; 
+		}
+	}
+	return substrings;
 }

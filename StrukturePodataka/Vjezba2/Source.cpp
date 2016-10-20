@@ -1,5 +1,7 @@
 #include "Helper.h"
-
+#include <conio.h>
+#include <ctype.h>
+#define getchar() getch()
 
 int main()
 {
@@ -44,8 +46,7 @@ int main()
 			}
 			exitflag = 0;
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
@@ -67,8 +68,7 @@ int main()
 			}
 			exitflag = 0;
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
@@ -101,8 +101,7 @@ int main()
 			}
 			exitflag = 0;
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
@@ -133,16 +132,14 @@ int main()
 			}
 			exitflag = 0;
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
 		case 5:
 			ShowList(root);
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		case 6 :
@@ -152,8 +149,7 @@ int main()
 			scanf(" %s", &path);
 			printf(Catch(WriteToFIle(root, path),&exitflag));
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
@@ -171,16 +167,19 @@ int main()
 				append = 0;
 			printf(Catch(ReadFile(root, path,append), &exitflag));
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
+		case 0:
+			printf("byeee");
+			ClearList(root);
+			free(root);
+			break;
 		default:
 			printf("Krivi izbor, 0-5");
 			printf("\nPress anykey to continue...");
-			getchar();
-			getchar();
+			getch();
 			printf("\n\n\n\n\n\n\n\n\n\n");
 			break;
 		}
