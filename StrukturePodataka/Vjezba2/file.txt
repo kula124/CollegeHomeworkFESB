@@ -1,3 +1,5 @@
-Sanja	Kulis		1994
-Ivan	Kulis		1993
-Ivana	Delic		1995
+#Ime	Prezime		God
+Ivan	Kulis		1994
+Antea	Deic		1993
+Kreso	Kulis		1998
+Neki	Degen		1994		

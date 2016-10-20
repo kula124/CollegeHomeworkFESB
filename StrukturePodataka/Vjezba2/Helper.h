@@ -40,4 +40,5 @@ int WriteToFIle(optr root, char* filepath);
 int ReadFile(optr root, char* path, int append);
 int ClearList(optr root);
 int FreeE(optr el);
+char** GetSubstrings(char* string, char termChar);
 #endif
