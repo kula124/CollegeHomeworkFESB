@@ -1,8 +1,8 @@
 
 #pragma warning(disable:4996) 
 
-#ifndef HELPER_CPP
-#define HELPER_CPP
+#ifndef HELPER_H
+#define HELPER_H
 //
 //ERROR CODES
 //
@@ -14,7 +14,6 @@
 //CONSTANTS
 //
 #define FILE_PATH_SIZE 50
-#define MAP_SIZE 20
 #define NAME_SIZE 50
 #define LNAME_SIZE 50
 #define NUMBER_SIZE 9

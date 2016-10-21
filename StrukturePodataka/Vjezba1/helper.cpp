@@ -21,9 +21,7 @@ int GetRowCount(FILE* fp)
 		return FILE_READ_ERROR;
 	return count;
 }
-//
-//---------------------
-//
+
 stdp* GetArray(FILE* fp, int count, float* cmax)
 {
 	rewind(fp);
@@ -35,10 +33,10 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 	*cmax = 0;
 	char buffer[READ_BUFFER_SIZE];
 	char** data = NULL;
-	for (i = 0; i<count; i++)
+	for (i = 0; i < count; i++)
 	{
 		fgets(buffer, READ_BUFFER_SIZE, fp);
-		if (buffer[0] == '#' || strlen(buffer)<10) //TODO: Better junk detection
+		if (buffer[0] == '#' || strlen(buffer) < 10) //TODO: Better junk detection
 		{
 			i -= 1;
 			continue;
@@ -62,13 +60,14 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 	ReleseData(data, 3); //--> Bad heap access error? [SOLVED]
 	return sarray;
 }
+
 char** GetSubstrings(char* string, char termChar)  // Improved from Vjezba2
 {
 	int lengt = strlen(string);
 	if (lengt < 10)
 		return NULL;
 	int i, previ = 0, count = 0;
-	for (i = 0; i<lengt; i++)
+	for (i = 0; i < lengt; i++)
 	{
 		if (string[i] == termChar)
 		{
@@ -99,18 +98,19 @@ char** GetSubstrings(char* string, char termChar)  // Improved from Vjezba2
 				free(sub);
 				continue;
 			}
-			substrings[tempCount++] = sub; //not reversed anymore 
+			substrings[tempCount++] = sub; //not reversed anymore
 		}
 	}
 	return substrings;
 }
+
 void ReadData(stdp* studenti_, int c, float max)
 {
 	int preL;
 	preL = strlen("Prezime");
 	printf("\nIme\tPrezime\t\tBodovi\tRel.Bodovi\n");
 	int i;
-	for (i = 0; i<c; i++)
+	for (i = 0; i < c; i++)
 	{
 		printf("%s\t", studenti_[i]->name);
 		printf("%s\t", studenti_[i]->lname);
@@ -131,23 +131,23 @@ void ReadData(stdp* studenti_, int c, float max)
 
 void ReleseMemoryStd(stdp* arr, int count)
 {
-	for (int i = 0; i<count; i++)
+	for (int i = 0; i < count; i++)
 	{
 		free(arr[i]->lname);
 		free(arr[i]->name);
 		free(arr[i]);
 	}
 }
+
 void ReleseData(char** data, int count)
 {
-	for (int i = 0; i<count; i++)
+	for (int i = 0; i < count; i++)
 		free(data[i]); //Ne dodavanje +1 u size u malloc-u je rusilo free kod poziva na char*. Znaci da '\0' se ne broji u strlen... Nisam to znao
-					   //free(data) -> Error, data = data[0]?
+					   //free(data) -> Error, data = data[0]?... duuuhh
 }
 //mozda se mogu spojiti ove dvije funkcije u jednu oblika:
 //void ReleseMemory(void**p, int count, int isStdudent);
 //pokusao ali odustao... heap overwrite errors n stuff
-
 
 //void Throw(int ErrorCode)
 //{
