@@ -125,11 +125,11 @@ stdp* GetArray(FILE* fp, int count, float* cmax)
 		data = GetSubstrings(buffer,' ');
 		if (!data)
 			return NULL;
-		temp->name = (char*)malloc(sizeof(char)*strlen(data[2]) + 1);
-		strcpy(temp->name,data[2]);
+		temp->name = (char*)malloc(sizeof(char)*strlen(data[0]) + 1);
+		strcpy(temp->name,data[0]);
 		temp->lname = (char*)malloc(sizeof(char)*strlen(data[1]) + 1);
 		strcpy(temp->lname,data[1]);
-		temp->points = atof(data[0]);
+		temp->points = atof(data[2]);
 		if (*cmax < temp->points)
 			*cmax = temp->points;
 		sarray[i] = temp;
@@ -174,7 +174,7 @@ char** GetSubstrings(char* string, char termChar)  // Improved from Vjezba2
 				free(sub);
 				continue;
 			}
-			substrings[tempCount++] = sub;
+			substrings[tempCount++] = sub; //not reversed anymore 
 		}
 	}
 	return substrings;
