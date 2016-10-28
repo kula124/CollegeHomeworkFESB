@@ -1,13 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "Helper.h"
 optr CreateElement(char * n, char * l, int god)
 {
 	optr p = (optr)malloc(sizeof(_osoba));
 	if (!p)
 		return p;
-	if ((n == NULL || strlen(n) <= 2) && (l == NULL || strlen(l) <= 2)) //znaci stvaramo root
+	if ((n == NULL || strlen(n) <= 2) && (l == NULL || strlen(l) <= 2))
 	{
 		p->name = NULL;
 		p->lname = NULL;
