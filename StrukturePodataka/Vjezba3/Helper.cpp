@@ -76,9 +76,9 @@ int Swap(osoba A, osoba B, osoba prevA)
 {
 	if (!A || !B || !prevA)
 		return ERROR_UNESPECTED_NULL_PARAMETER;
-	prevA->next= B;
-	A->next = B->next;
+	prevA = B;
 	B->next = A;
+	A->next = B->next;
 	return OK;
 }
 
@@ -184,7 +184,7 @@ int ReadFilev2(osoba root, char* path, int append)
 		if (buffer[0] == '#' || strlen(buffer) < 2)
 			continue;
 		fsetpos(file_, &pos);
-		fscanf(file_, " %s%s%d", &tn, &tl, &born);
+		fscanf(file_, " %s %s %d", &tn, &tl, &born);
 		osoba n = CreateElement(tn, tl, born);
 		if (!n)
 		{
@@ -217,7 +217,7 @@ int WriteFile(osoba start, char* path, int appendToFile)
 	if (!file_)
 		return ERROR_OPENING_FILE;
 	fprintf(file_, "#Ime\tPrezime\t\tGod\n");
-	while (p)
+	while (p->next)
 	{
 		fprintf(file_, "%s\t%s\t\t%d\n",p->name,p->lname,p->born);
 		p = p->next;
@@ -283,25 +283,20 @@ int Sort(osoba root, int sortBy, int method, double *time, char order) //Under c
 	}
 	else if (sortBy == BORN && method == METHOD_BUBBLE)
 	{
-		osoba p, prev;
-		p = root;
-		prev = root;
 		int i = 0, n = GetNumberOfElements(root);
 		if (n < 2)
 			return ERROR_TOO_FEW_ELEMENTS;
 		while (i++ < n)
 		{
-
-			while (true)
+			osoba p = root->next;
+			osoba q, prev = root;
+			while (p)
 			{
-				prev = p;
+				q = p;
 				p = p->next;
-				if (!p->next)
-					break;
-				if ((Order * CompareElement(p, p->next, BORN)) >= 0)
+				if (order * CompareElement(q, p, BORN))
 					continue;
-				Swap(p, p->next, prev);
-				p = prev->next;
+				Swap(q, p, prev);
 			}
 		}
 	}
