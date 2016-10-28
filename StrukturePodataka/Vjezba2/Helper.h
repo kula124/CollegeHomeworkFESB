@@ -2,9 +2,6 @@
 
 #ifndef HELPER_H
 #define HELPER_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 //Error Codes
 #define ERROR_OPENING_FILE -404
 #define ERROR_WRITTING_TO_FILE -403

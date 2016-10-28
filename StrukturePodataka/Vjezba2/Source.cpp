@@ -1,7 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Helper.h"
 #include <conio.h>
 #include <ctype.h>
-#define getchar() getch()
+
 
 int main()
 {
