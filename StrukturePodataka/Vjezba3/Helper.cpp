@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "Helper.h"
+#include "..\Vjezba3(simple)\Helper.h"
 ///<sumary>Always inserts new behind element</sumary>
 /// <param name="elemnt">Element behind witch new element is inserted</param>
 ///<returns>(int)Error code defined in Helper.h</returns>
@@ -158,6 +159,28 @@ int ClearList(osoba root)
 		FreeEl(prev);
 	}
 	root->next = NULL;
+	return OK;
+}
+
+int DeleteNode(osoba root, osoba target)
+{
+	if (!target)
+		return ERROR_ELEMENT_NOT_FOUND;
+	osoba pr = FindPrev(root,target);
+	if (!pr)
+		return ERROR_UNESPECTED_NULL_PARAMETER;
+	pr->next = target->next;
+	FreeNode(target);
+	return OK;
+}
+
+int FreeNode(osoba node)
+{
+	if (!node)
+		return ERROR_UNESPECTED_NULL_PARAMETER;
+	free(node->lname);
+	free(node->name);
+	free(node);
 	return OK;
 }
 
