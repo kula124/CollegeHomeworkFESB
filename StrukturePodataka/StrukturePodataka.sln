@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba1", "Vjezba1\Vjezba1.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba3", "Vjezba3\Vjezba3.vcxproj", "{523B4CD2-0E47-4C04-B136-E3B2FC3D3629}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba3(simple)", "Vjezba3(simple)\Vjezba3(simple).vcxproj", "{5506E291-D257-4BEE-9318-C3D201FD526B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,14 @@ Global
 		{523B4CD2-0E47-4C04-B136-E3B2FC3D3629}.Release|Win32.Build.0 = Release|Win32
 		{523B4CD2-0E47-4C04-B136-E3B2FC3D3629}.Release|x64.ActiveCfg = Release|x64
 		{523B4CD2-0E47-4C04-B136-E3B2FC3D3629}.Release|x64.Build.0 = Release|x64
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Debug|Win32.Build.0 = Debug|Win32
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Debug|x64.ActiveCfg = Debug|x64
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Debug|x64.Build.0 = Debug|x64
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Release|Win32.ActiveCfg = Release|Win32
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Release|Win32.Build.0 = Release|Win32
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Release|x64.ActiveCfg = Release|x64
+		{5506E291-D257-4BEE-9318-C3D201FD526B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
