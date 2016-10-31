@@ -1,0 +1,8 @@
+mkdir unix
+chmod 755 unix
+cd unix
+joe vjezba1.txt
+chmod 775 vjezba1.txt
+cd ..
+tar -cf unix.tar unix
+
