@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Helper.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,9 +23,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="asciiArt.txt" />
-    <Text Include="file.txt">
-      <Filter>Source Files</Filter>
+    <Text Include="asciiArt.txt">
+      <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="file.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
