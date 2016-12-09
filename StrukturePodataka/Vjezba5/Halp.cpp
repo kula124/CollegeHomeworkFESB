@@ -60,6 +60,18 @@ int SortedReadFile(char* path, list* l)
 	return OK;
 }
 
+int AddList(list l, list lt)
+{
+	while (l)
+	{
+		lt->next = l;
+		lt = lt->next;
+		l = l->next;
+	}
+	lt->next = NULL;
+	return OK;
+}
+
 int Union(list l1, list l2, list l3)
 {
 	int option = 0;
@@ -77,10 +89,34 @@ int Union(list l1, list l2, list l3)
 			else
 				return error;
 		}
-		while (l3->next)
+		while (l3->next) //Set pointer to end of the list
 			l3 = l3->next;
 	}
 	while (l1 && l2)
+	{
+		if (l1->value > l2->value)
+		{
+			l3->next = l1;
+			l1 = l1->next;
+		}
+		else if (l2->value > l1->value)
+		{
+			l3->next = l2;
+			l2 = l2->next;
+		}
+		else
+		{
+			l3->next = l2;
+			l2 = l2->next;
+			l1 = l1->next;
+		}
+		l3 = l3->next;
+	}
+	if (!l1)
+		AddList(l2, l3);
+	else
+		AddList(l1, l3);
+	return OK;
 }
 
 int WriteOut(list li)
@@ -224,3 +260,30 @@ int Signum(int value)
 {
 	return value > 0 ? 1 : -1;
 }
+
+void CheckFlag(int f)
+{
+	if (f == 2)
+		printf("   [OK]\n");
+	if (f == 1)
+		printf("   [Ready]\n");
+	else
+		printf("\n");
+}
+
+int InputPicker(list tl)
+{
+	int c;
+	scanf(" %d", &c);
+	if (c == 1)
+	{
+		char path[P_SIZE];
+		printf("Enter path: ");
+		scanf(" %s", &path);
+		return SortedReadFile(path, &tl);
+	}
+	if (c == 2)
+		return SortedInput(&tl);
+	return ERROR_BAD_INPUT;
+}
+
