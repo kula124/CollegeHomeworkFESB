@@ -6,5 +6,5 @@ vjezba3.o:vjezba3.c
 clear:
 	rm *.o *.txt vjezba3 
 run:vjezba3
-	./vjezba3 file.txt fajl.txt
+	./vjezba3 file.txt
 

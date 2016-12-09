@@ -6,39 +6,16 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#define MAX 50
-int main(void)
+int main()
 {
 	int status = 0;
-	int myPID;
-    int forkPID;
-	int parentPID;
-	int userID;
-    forkPID = fork();
+	pid_t forked;
+	forked = fork();
 	wait(&status);
-	if(forkPID >= 0) // fork was successful
-    {
-        if(forkPID == 0) // child process
-        {
-            myPID = getpid();
-			parentPID = getppid();
-			userID = getuid();
-			write (STDOUT_FILENO,"Process child :\n",MAX);
-			printf("C - MY PID: %d \nC - MY PPID: %d \nC - MY USERID: %d \n",myPID,parentPID,userID);
-        }
-        else //Parent process
-        {
-            myPID = getpid();
-			parentPID = getppid();
-			userID = getuid();
-			write (STDOUT_FILENO,"Process parent :\n",MAX);
-			printf("P - MY PID: %d\nP - MY PPID: %d\nP - MY USERID: %d\n",myPID,parentPID,userID);
-        }
-    }
-    else // fork failed
-    {
-        printf("\n Fork failed, quitting!!!!!!\n");
-        return 1;
-    }
+	if (forked == 0)
+		printf("\nChild:\n");
+	else
+		printf("\nParent\n");
+	printf("PID =%d\nPPID = %d,\nUID = %d\n----------------\n",getpid(),getppid(),getuid()); 
     return 0;
 }
