@@ -36,22 +36,23 @@ int SortedReadFile(char* path, list* l)
 			F = F->next;
 	}
 
-	element p, prev;
+	element p = head, prev;
 	int scaned = 0;
-	while (fscanf(file_, " %d", &scaned) && !feof(file_))
+	while (p && Compare(p->value, scaned, sflag))
 	{
+		prev = head;
 		p = head->next;
 		if (IsEmpty(head))
 		{
 			head->next = CreateElement(scaned);
-			break;
+			continue;
 		}
-		if (Compare (p->value,scaned,sflag) > 0)
+		while (p && p->value > scaned)
 		{
 			prev = p;
 			p = p->next;
 		}
-		error = InsertBehind(&prev, scaned);
+		error = InsertBehind(prev, scaned);
 		if (error != 0)
 			return error;
 	}
@@ -119,8 +120,30 @@ int Union(list l1, list l2, list l3)
 	return OK;
 }
 
+int JoinSection(list l1, list l2, list * l3)
+{
+	if (!l1 || !l2 || !l2->next || l1->next)
+		return ERROR_EMPTY_LIST;
+	list head = *l3;
+	element p = l2->next;
+	while (l1)
+	{
+		while (p)
+		{
+			if (l1->value == p->value)
+				InsertBehind(*l3, p->value);
+			p = p->next;
+		}
+		l1 = l1->next;
+	}
+	return OK;
+}
+
 int WriteOut(list li)
 {
+	li = li->next;
+	if (!li)
+		return ERROR_EMPTY_LIST;
 	if (!li->next)
 		return ERROR_EMPTY_LIST;
 	printf("List: ");
@@ -163,22 +186,23 @@ int SortedInput(list* li)
 			puts("List cleared!");
 		}
 	}
-	element p, prev, temp;
+	element p = head, prev;
 	puts("Enter -1 to stop inputing!\nInput integer: ");
-	while (scanf(" %d", &scaned)>0 && scaned!=-1)
+	while (scanf("  %d", &scaned)>0 && scaned!=-1)
 	{
+		prev = head;
 		p = head->next;
 		if (IsEmpty(head))
 		{
 			head->next = CreateElement(scaned);
-			break;
+			continue;
 		}
-		if (p && p->value > scaned)
+		while (p && Compare(p->value,scaned,sflag))
 		{
 			prev = p;
 			p = p->next;
 		}
-		error = InsertBehind(&prev, scaned);
+		error = InsertBehind(prev, scaned);
 		if (error != 0)
 			return error;
 	}
@@ -206,14 +230,14 @@ int DeleteList(list* li)
 	return OK;
 }
 
-int InsertBehind(element* el, int val)
+int InsertBehind(element el, int val)
 {
-	element t, ele = *el;
+	element t;
 	element ne = CreateElement(val);
 	if (!ne)
 		return ERROR_MALLOC_FAILED;
-	t = ele->next;
-	ele->next = ne;
+	t = el->next;
+	el->next = ne;
 	ne->next = t;
 	return OK;
 }
@@ -261,11 +285,49 @@ int Signum(int value)
 	return value > 0 ? 1 : -1;
 }
 
+void Catch(int error)
+{
+	switch (error)
+	{
+	case ERROR_OPENING_FILE:
+		printf("Failed to open file...\n");
+		break;
+	case ERROR_EMPTY_LIST:
+		printf("Trying to manipulate empty list!\n");
+		break;
+	case ERROR_BAD_INPUT :
+		printf("Bad input!\n");
+		break;
+	case ERROR_LISTS_NOT_READY:
+		printf("Make sure the list is ready! (Check if lists 1 and 2 are empty)\n");
+		break;
+	case ERROR_LIST_NOT_EMPTY:
+		printf("List is not empty, new input declined by user!\n");
+		break;
+	case ERROR_MALLOC_FAILED:
+		printf("Failed to allocate memory! Quitting...\n");
+		break;
+	case ERROR_NULL_NOT_EXPECTED: 
+		printf("Unsepected null parameter! Should not happen! Quitting....\n");
+		break;
+	case ERROR_READING_FILE:
+		printf("Reading inperupted, End Of File not reached! Qutting...\n");
+		break;
+	case OK :
+		printf("[OK]\n");
+		break;
+	case USER_EXIT:
+		printf("Byeee :)\n");
+	default:
+		printf("ayyyy lmao... dafaq just happened? O_o");
+	}
+}
+
 void CheckFlag(int f)
 {
-	if (f == 2)
-		printf("   [OK]\n");
 	if (f == 1)
+		printf("   [OK]\n");
+	else if (f == 2)
 		printf("   [Ready]\n");
 	else
 		printf("\n");
