@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9876B975-2F3F-4ED4-B37E-96E444953D07}</ProjectGuid>
+    <ProjectGuid>{C20EDA35-DEF2-4C48-8906-E352A21EC502}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Vjezba5</RootNamespace>
+    <RootNamespace>vjezba5</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -146,11 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Halp.h" />
+    <ClCompile Include="halp.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Halp.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClInclude Include="halp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

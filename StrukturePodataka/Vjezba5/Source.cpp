@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include "Halp.h"
 #include <stdlib.h>
-
-
-
-int main ()
+#include "halp.h"
+int main(int argc, char** argv)
 {
-	int fList1=0, fList2=0, fUnion=0, fSection=0, choise = -1, error = 0;
+	void (*CheckFlag_Callback) (int f);
+	CheckFlag_Callback = U_FLAG == 0 ? CheckFlag : CheckFlagUNIX; //OS depented function accessed via callback, U_FLAG is set for UNIX and not set for WINDOWS
+	int fList1 = 0, fList2 = 0, fUnion = 0, fSection = 0, choise = -1, error = 0;
 	list l1, l2, uni, sec;
 	l1 = CreateElement(-999);
 	l2 = CreateElement(-999);
@@ -14,19 +13,19 @@ int main ()
 	sec = CreateElement(-999);
 	while (choise != 0)
 	{
-		if (fList1 && fList2)
+		if (fList1 && fList2 && !fUnion && !fSection)
 		{
-			fUnion = 2;
-			fSection = 2;
+			fUnion = STATUS_READY;
+			fSection = STATUS_READY;
 		}
 		printf("1) Set 1st list");
-		CheckFlag(fList1);
+		CheckFlag_Callback(fList1);
 		printf("2) Set 2nd list");
-		CheckFlag(fList2);
+		CheckFlag_Callback(fList2);
 		printf("3) Union lists");
-		CheckFlag(fUnion);
+		CheckFlag_Callback(fUnion);
 		printf("4) Join lists");
-		CheckFlag(fSection);
+		CheckFlag_Callback(fSection);
 		printf("5) Read list\n");
 		printf("6) Clear list\n");
 		printf("7) Write out to file\n");
@@ -34,49 +33,42 @@ int main ()
 		scanf(" %d", &choise);
 		switch (choise)
 		{
-		case 0:
-			error = USER_EXIT;
-			break;
 		case 1:
 			CLEAR_SCREEN();
-			printf("Input 1st list:\n1) From file\n2) Input manually\nChoose: ");
 			error = InputPicker(l1);
 			if (!error)
-				fList1 = 1;
+				fList1 = STATUS_OK;
 			break;
 		case 2:
 			CLEAR_SCREEN();
-			printf("Input 2nd list:\n1) From file\n2) Input manually\nChoose: ");
 			error = InputPicker(l2);
 			if (!error)
-				fList2 = 1;
+				fList2 = STATUS_OK;
 			break;
-		case 3: 
-			if (!fList1 || !fList2)
+		case 3:
+			if (!fList1 && !fList2)
 			{
 				error = ERROR_LISTS_NOT_READY;
 				break;
 			}
 			error = Union(l1, l2, uni);
 			if (!error)
-				fUnion = 1;
+				fUnion = STATUS_OK;
 			break;
 		case 4:
-			if (!fList1 || !fList2)
+			if (!fList1 && !fList2)
 			{
 				error = ERROR_LISTS_NOT_READY;
 				break;
 			}
-			error = JoinSection(l1, l2,&sec);
-			if (!error) {
-				fSection = 1;
-			}
+			error = JoinSection(l1, l2, uni);
+			if (!error)
+				fUnion = STATUS_OK;
 			break;
-		case 5:
-		{
+		case 5: {
 			int pick = 0;
 			CLEAR_SCREEN();
-			puts("Read List:\n1) First list\n2) Second List\n3) Union List\n4) Joined List\n0) Back\nChoose: ");
+			printf("Read List:\n1) First list\n2) Second List\n3) Union List\n4) Joined List\n5) Read all\n0) Back\nChoose: ");
 			scanf(" %d", &pick);
 			if (pick == 1)
 				error = WriteOut(l1);
@@ -86,15 +78,25 @@ int main ()
 				error = WriteOut(uni);
 			else if (pick == 4)
 				error = WriteOut(sec);
+			else if (pick == 5)
+			{
+				if (error = WriteOut(l1) != 0)
+					break;
+				if (error = WriteOut(l2) != 0)
+					break;
+				if (error = WriteOut(uni) != 0)
+					break;
+				if (error = WriteOut(sec) != 0)
+					break;
+			}
 			else if (pick == 0)
 				break;
 			break;
 		}
-		case 6:
-		{
+		case 6: {
 			int pick6 = 0;
 			CLEAR_SCREEN();
-			puts("\nDelete List:\n1) First list\n2) Second List\n3) Union List\4) Joined List\n5) All \n0) Back\nChoose: ");
+			printf("\nDelete List:\n1) First list\n2) Second List\n3) Union List\4) Joined List\n5) All \n0) Back\nChoose: ");
 			scanf(" %d", &pick6);
 			if (pick6 == 1)
 				error = DeleteList(&l1);
@@ -130,4 +132,5 @@ int main ()
 		getchar();
 		CLEAR_SCREEN();
 	}
+	return OK;
 }
