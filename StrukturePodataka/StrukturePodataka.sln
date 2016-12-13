@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba4", "Vjezba4\Vjezba4.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vjezba5", "vjezba5\vjezba5.vcxproj", "{C20EDA35-DEF2-4C48-8906-E352A21EC502}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vjezba6", "Vjezba6\Vjezba6.vcxproj", "{018B97FF-D40E-4C15-9CE3-06582E633BCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -67,6 +69,14 @@ Global
 		{C20EDA35-DEF2-4C48-8906-E352A21EC502}.Release|Win32.Build.0 = Release|Win32
 		{C20EDA35-DEF2-4C48-8906-E352A21EC502}.Release|x64.ActiveCfg = Release|x64
 		{C20EDA35-DEF2-4C48-8906-E352A21EC502}.Release|x64.Build.0 = Release|x64
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Debug|Win32.Build.0 = Debug|Win32
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Debug|x64.ActiveCfg = Debug|x64
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Debug|x64.Build.0 = Debug|x64
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Release|Win32.ActiveCfg = Release|Win32
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Release|Win32.Build.0 = Release|Win32
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Release|x64.ActiveCfg = Release|x64
+		{018B97FF-D40E-4C15-9CE3-06582E633BCC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
